@@ -1,0 +1,10 @@
+{
+  "condition": "randomized",
+  "seed": 11,
+  "iterations": 500,
+  "num_envs": 512,
+  "steps_per_env": 32,
+  "transitions": 8192000,
+  "wall_seconds": 195.83935921900047,
+  "checkpoint": "final.pt"
+}

@@ -1,0 +1,12 @@
+{
+  "condition": "heavy",
+  "num_envs": 100,
+  "evaluation_seed": 20261007,
+  "checkpoint": "/home/hhm/Documents/Codex/2026-09-30/git-checkout-v2-3-0-error/outputs/ant-generalization/runs/baseline_seed22/final.pt",
+  "return_mean": 60.30257800121064,
+  "return_std_population": 20.04613195811954,
+  "episode_steps_mean": 871.31,
+  "survival_rate": 0.9,
+  "forward_m_mean": 64.20486450195312,
+  "wall_seconds": 10.983567987001152
+}

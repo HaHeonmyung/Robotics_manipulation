@@ -1,0 +1,23 @@
+{
+  "condition": {
+    "friction": [
+      0.5,
+      1.25
+    ],
+    "mass_scale": [
+      0.8,
+      1.2
+    ],
+    "kick": 0.3,
+    "kick_interval_s": [
+      4.0,
+      7.0
+    ]
+  },
+  "mass_min": 0.031367283314466476,
+  "mass_max": 0.580560564994812,
+  "static_friction_min": 0.5087310075759888,
+  "static_friction_max": 1.228445291519165,
+  "dynamic_friction_min": 0.5087310075759888,
+  "dynamic_friction_max": 1.091452956199646
+}

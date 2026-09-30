@@ -1,0 +1,12 @@
+{
+  "condition": "strong_kicks",
+  "num_envs": 100,
+  "evaluation_seed": 20261007,
+  "checkpoint": "/home/hhm/Documents/Codex/2026-09-30/git-checkout-v2-3-0-error/outputs/ant-generalization/runs/baseline_seed22/final.pt",
+  "return_mean": 96.4193893525959,
+  "return_std_population": 40.16468929196906,
+  "episode_steps_mean": 827.42,
+  "survival_rate": 0.84,
+  "forward_m_mean": 99.27464294433594,
+  "wall_seconds": 11.113344891000452
+}

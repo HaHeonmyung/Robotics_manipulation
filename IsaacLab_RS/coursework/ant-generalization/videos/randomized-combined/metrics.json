@@ -1,0 +1,12 @@
+{
+  "condition": "combined",
+  "num_envs": 100,
+  "evaluation_seed": 20261007,
+  "checkpoint": "/home/hhm/Documents/Codex/2026-09-30/git-checkout-v2-3-0-error/outputs/ant-generalization/runs/randomized_seed11/final.pt",
+  "return_mean": 71.42449991605012,
+  "return_std_population": 2.257712877782374,
+  "episode_steps_mean": 960.0,
+  "survival_rate": 1.0,
+  "forward_m_mean": 78.59638214111328,
+  "wall_seconds": 33.968762648997654
+}

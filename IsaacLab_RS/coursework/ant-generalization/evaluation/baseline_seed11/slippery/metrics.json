@@ -1,0 +1,12 @@
+{
+  "condition": "slippery",
+  "num_envs": 100,
+  "evaluation_seed": 20261007,
+  "checkpoint": "/home/hhm/Documents/Codex/2026-09-30/git-checkout-v2-3-0-error/outputs/ant-generalization/runs/baseline_seed11/final.pt",
+  "return_mean": 58.744492782276936,
+  "return_std_population": 11.106047898550266,
+  "episode_steps_mean": 911.3,
+  "survival_rate": 0.83,
+  "forward_m_mean": 60.145477294921875,
+  "wall_seconds": 9.779889405999711
+}

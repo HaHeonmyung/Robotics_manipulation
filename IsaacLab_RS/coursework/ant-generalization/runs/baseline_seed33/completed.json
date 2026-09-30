@@ -1,0 +1,10 @@
+{
+  "condition": "baseline",
+  "seed": 33,
+  "iterations": 500,
+  "num_envs": 512,
+  "steps_per_env": 32,
+  "transitions": 8192000,
+  "wall_seconds": 183.8936260449991,
+  "checkpoint": "final.pt"
+}
