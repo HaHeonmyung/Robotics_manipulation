@@ -4,6 +4,7 @@
 
 과제 코드와 실제 학습·평가 결과는 [IsaacLab_RS/coursework/ant-generalization](IsaacLab_RS/coursework/ant-generalization)에 있습니다.
 
+- [처음 사용자용 상세 실행 안내서 TXT](IsaacLab_RS/coursework/ant-generalization/실행방법_처음사용자용.txt)
 - [실행 명령과 실험 설계](IsaacLab_RS/coursework/ant-generalization/README.md)
 - [결과 보고서](IsaacLab_RS/coursework/ant-generalization/REPORT.md)
 - [5분 발표 PPT](IsaacLab_RS/coursework/ant-generalization/Ant-Generalization-5min.pptx)
