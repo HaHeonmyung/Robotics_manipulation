@@ -1,0 +1,52 @@
+# 설치한 Conda 환경을 활성화하고 압축을 푼 IsaacLab 폴더에서 실행합니다.
+# conda activate lerobot-arena
+# cd ~/Robotics_manipulation/IsaacLab_RS
+
+# PPT와 같은 공통 평가: 가중치에서 관측/센서 구성을 자동 선택합니다.
+# 기존 PPT 원자료를 덮어쓰지 않도록 다른 출력 폴더를 지정했습니다.
+./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/evaluate_ant_common.py \
+  --headless --seed 24 --num_envs 100 --duration 16 \
+  --checkpoint logs/rsl_rl/ant/2026-09-17_13-20-13_ant_baseline/model_999.pt --label 1_flat \
+  --checkpoint logs/rsl_rl/ant_terrain_hard/2026-10-05_12-24-39_hard_seed42/model_999.pt --label 2_hard \
+  --checkpoint logs/rsl_rl/ant_terrain_curriculum/2026-10-06_19-08-42_curriculum_only_seed42/model_999.pt --label 3_curriculum \
+  --checkpoint logs/rsl_rl/ant_continuous_wide_ray/2026-10-05_21-25-33_wide_ray_fresh_seed42_10k/model_3300.pt --label 4_curriculum_ray \
+  --checkpoint logs/rsl_rl/ant_continuous_wide_ray_recovery/2026-10-06_14-05-48_recovery_seed42_10k/model_2800.pt --label 5_recovery \
+  --output_dir logs/ant_terrain_comparison/reproduced_ppt_comparison
+
+# 개별 평가: 위 evaluator에서 checkpoint/label 한 쌍만 남기면 됩니다.
+# 수업 제공 evaluator는 모델에 맞는 task도 지정해야 합니다. 아래는 모델별 명령입니다.
+
+# 1. 평지 학습
+./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/play_one_episode_provided.py \
+  --task Isaac-Ant-Common-Eval-v0 --seed 24 --num_envs 100 --headless \
+  --checkpoint logs/rsl_rl/ant/2026-09-17_13-20-13_ant_baseline/model_999.pt
+
+# 2. 험지 직접 학습
+./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/play_one_episode_provided.py \
+  --task Isaac-Ant-Common-Eval-v0 --seed 24 --num_envs 100 --headless \
+  --checkpoint logs/rsl_rl/ant_terrain_hard/2026-10-05_12-24-39_hard_seed42/model_999.pt
+
+# 3. 험지 + Curriculum
+./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/play_one_episode_provided.py \
+  --task Isaac-Ant-Common-Eval-v0 --seed 24 --num_envs 100 --headless \
+  --checkpoint logs/rsl_rl/ant_terrain_curriculum/2026-10-06_19-08-42_curriculum_only_seed42/model_999.pt
+
+# 4. Curriculum + 넓은 RayCaster
+./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/play_one_episode_provided.py \
+  --task Isaac-Ant-Common-Wide-Ray-Eval-v0 --seed 24 --num_envs 100 --headless \
+  --checkpoint logs/rsl_rl/ant_continuous_wide_ray/2026-10-05_21-25-33_wide_ray_fresh_seed42_10k/model_3300.pt
+
+# 5. Curriculum + 넓은 RayCaster + Recovery reward shaping
+./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/play_one_episode_provided.py \
+  --task Isaac-Ant-Common-Wide-Ray-Eval-v0 --seed 24 --num_envs 100 --headless \
+  --checkpoint logs/rsl_rl/ant_continuous_wide_ray_recovery/2026-10-06_14-05-48_recovery_seed42_10k/model_2800.pt
+
+# GUI: 모델 ①~③은 task를 Isaac-Ant-Common-Eval-v0로 바꿉니다.
+./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/play.py \
+  --task Isaac-Ant-Common-Wide-Ray-Eval-v0 \
+  --num_envs 8 --seed 24 --camera_mode overview --log_resets --real-time \
+  --checkpoint logs/rsl_rl/ant_continuous_wide_ray_recovery/2026-10-06_14-05-48_recovery_seed42_10k/model_2800.pt
+
+# 60초 및 torso_height OFF는 PPT의 16초/ON과 별도 조건입니다.
+# 제공 evaluator: reward/steps mean/std.
+# evaluate_ant_common.py: 위 항목 + 접지 최대 전진 거리 및 동일 초기 상태/지형 해시 확인.

@@ -69,3 +69,11 @@ tests/
 
 # Docker history
 .isaac-lab-docker-history
+
+# Submission: include the selected trained checkpoint; ignore evaluation exports.
+!checkpoints/
+!checkpoints/ant_recovery/
+!checkpoints/ant_recovery/model_2800.pt
+!checkpoints/ant_recovery/params/
+!checkpoints/ant_recovery/params/*.yaml
+checkpoints/**/exported/

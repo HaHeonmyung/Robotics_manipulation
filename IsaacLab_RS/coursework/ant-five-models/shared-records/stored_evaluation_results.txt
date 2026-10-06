@@ -1,0 +1,7 @@
+기존 평가 CSV의 요약입니다. 새 평가 실행이나 원본 터미널 stdout 로그가 아닙니다.
+
+1. 평지 학습: reward 2.874839 ± 2.327993; grounded max forward mean 1.465756 m
+2. 험지 직접 학습: reward 9.172407 ± 5.130262; grounded max forward mean 3.772204 m
+3. 험지 + Curriculum: reward 6.121553 ± 3.937864; grounded max forward mean 3.352082 m
+4. Curriculum + 넓은 RayCaster: reward 10.336969 ± 10.883198; grounded max forward mean 6.963393 m
+5. Curriculum + 넓은 RayCaster + Recovery reward shaping: reward 11.253564 ± 11.336109; grounded max forward mean 7.473385 m

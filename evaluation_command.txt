@@ -1,0 +1,17 @@
+# 실습 과제 1: 최종 Recovery model_2800 평가
+# GitHub: https://github.com/HaHeonmyung/Robotics_manipulation
+# 설치는 저장소 README.md 참고. 환경명과 clone 위치는 PC에 맞게 변경합니다.
+conda activate lerobot-arena
+cd ~/Robotics_manipulation/IsaacLab_RS
+
+./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/play_one_episode_provided.py \
+  --task Isaac-Ant-Common-Wide-Ray-Eval-v0 \
+  --seed 24 \
+  --num_envs 100 \
+  --headless \
+  --checkpoint logs/rsl_rl/ant_continuous_wide_ray_recovery/2026-10-06_14-05-48_recovery_seed42_10k/model_2800.pt
+
+# 원본 Ant 보상, 16초 제한, torso_height ON인 공통 평가 환경입니다.
+# 100개 환경 첫 에피소드 보상 mean/std와 steps mean/std를 출력합니다.
+# PPT의 접지 최대 전진 거리는 evaluate_ant_common.py로 별도 측정합니다.
+# 기존 Continuous-Wide-Ray-Recovery-Eval-v0 평가와는 다른 task입니다.

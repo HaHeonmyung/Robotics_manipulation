@@ -1,0 +1,9 @@
+# Core evaluator/training dependencies observed on the source PC.
+# Install Isaac Sim and CUDA PyTorch using the README, then IsaacLab --install rsl_rl.
+rsl-rl-lib==3.0.1
+gymnasium==1.2.0
+numpy==1.26.0
+matplotlib==3.10.3
+hydra-core==1.3.7
+onnx==1.22.0
+onnxscript==0.7.2

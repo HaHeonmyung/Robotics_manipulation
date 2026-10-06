@@ -1,3 +1,0 @@
-# Small final checkpoints and videos are committed directly (all <100 MiB).
-*.pt -filter -diff -merge -text
-*.mp4 -filter -diff -merge -text

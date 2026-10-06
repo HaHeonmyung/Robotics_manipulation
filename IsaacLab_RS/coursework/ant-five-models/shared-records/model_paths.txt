@@ -1,0 +1,44 @@
+PPT 다섯 모델: 압축 내 IsaacLab/ 기준 상대 경로입니다.
+공통 평가: seed 24 / 환경 100 / 16초 / torso_height ON / 원본 Ant 보상
+
+1. 평지 학습 (1_flat)
+가중치: logs/rsl_rl/ant/2026-09-17_13-20-13_ant_baseline/model_999.pt
+관측 차원: 60
+수업 evaluator task: Isaac-Ant-Common-Eval-v0
+학습 설정: logs/rsl_rl/ant/2026-09-17_13-20-13_ant_baseline/params/
+학습 로그: logs/rsl_rl/ant/2026-09-17_13-20-13_ant_baseline/events.out.tfevents.*
+평가 기록: logs/ant_terrain_comparison/common_16s_height_on_seed24/1_flat/
+
+2. 험지 직접 학습 (2_hard)
+가중치: logs/rsl_rl/ant_terrain_hard/2026-10-05_12-24-39_hard_seed42/model_999.pt
+관측 차원: 60
+수업 evaluator task: Isaac-Ant-Common-Eval-v0
+학습 설정: logs/rsl_rl/ant_terrain_hard/2026-10-05_12-24-39_hard_seed42/params/
+학습 로그: logs/rsl_rl/ant_terrain_hard/2026-10-05_12-24-39_hard_seed42/events.out.tfevents.*
+평가 기록: logs/ant_terrain_comparison/common_16s_height_on_seed24/2_hard/
+
+3. 험지 + Curriculum (3_curriculum)
+가중치: logs/rsl_rl/ant_terrain_curriculum/2026-10-06_19-08-42_curriculum_only_seed42/model_999.pt
+관측 차원: 60
+수업 evaluator task: Isaac-Ant-Common-Eval-v0
+학습 설정: logs/rsl_rl/ant_terrain_curriculum/2026-10-06_19-08-42_curriculum_only_seed42/params/
+학습 로그: logs/rsl_rl/ant_terrain_curriculum/2026-10-06_19-08-42_curriculum_only_seed42/events.out.tfevents.*
+평가 기록: logs/ant_terrain_comparison/common_16s_height_on_seed24/3_curriculum/
+
+4. Curriculum + 넓은 RayCaster (4_curriculum_ray)
+가중치: logs/rsl_rl/ant_continuous_wide_ray/2026-10-05_21-25-33_wide_ray_fresh_seed42_10k/model_3300.pt
+관측 차원: 247
+수업 evaluator task: Isaac-Ant-Common-Wide-Ray-Eval-v0
+학습 설정: logs/rsl_rl/ant_continuous_wide_ray/2026-10-05_21-25-33_wide_ray_fresh_seed42_10k/params/
+학습 로그: logs/rsl_rl/ant_continuous_wide_ray/2026-10-05_21-25-33_wide_ray_fresh_seed42_10k/events.out.tfevents.*
+평가 기록: logs/ant_terrain_comparison/common_16s_height_on_seed24/4_curriculum_ray/
+
+5. Curriculum + 넓은 RayCaster + Recovery reward shaping (5_recovery)
+가중치: logs/rsl_rl/ant_continuous_wide_ray_recovery/2026-10-06_14-05-48_recovery_seed42_10k/model_2800.pt
+관측 차원: 247
+수업 evaluator task: Isaac-Ant-Common-Wide-Ray-Eval-v0
+학습 설정: logs/rsl_rl/ant_continuous_wide_ray_recovery/2026-10-06_14-05-48_recovery_seed42_10k/params/
+학습 로그: logs/rsl_rl/ant_continuous_wide_ray_recovery/2026-10-06_14-05-48_recovery_seed42_10k/events.out.tfevents.*
+평가 기록: logs/ant_terrain_comparison/common_16s_height_on_seed24/5_recovery/
+
+PPT 최종 비교 원자료: logs/ant_terrain_comparison/common_16s_height_on_seed24/summary.csv

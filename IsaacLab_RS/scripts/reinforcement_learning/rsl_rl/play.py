@@ -23,6 +23,14 @@ parser.add_argument(
     "--disable_fabric", action="store_true", default=False, help="Disable fabric and use USD I/O operations."
 )
 parser.add_argument("--num_envs", type=int, default=None, help="Number of environments to simulate.")
+parser.add_argument(
+    "--camera_mode", choices=("follow", "overview"), default="follow",
+    help="Follow the first Ant, or show all environments from a fixed overview camera.",
+)
+parser.add_argument(
+    "--log_resets", action="store_true",
+    help="Print the termination conditions for each automatic reset (manager-based environments).",
+)
 parser.add_argument("--task", type=str, default=None, help="Name of the task.")
 parser.add_argument(
     "--agent", type=str, default="rsl_rl_cfg_entry_point", help="Name of the RL agent configuration entry point."
@@ -80,6 +88,25 @@ from isaaclab_tasks.utils.hydra import hydra_task_config
 # PLACEHOLDER: Extension template (do not remove this comment)
 
 
+def overview_camera_pose(origins, terrain_size, continuous_course=False):
+    """Frame the active terrain tiles, including the Ant course ahead of spawn."""
+    lower = [min(origin[axis] for origin in origins) for axis in range(3)]
+    upper = [max(origin[axis] for origin in origins) for axis in range(3)]
+    if continuous_course:
+        # The Ant spawns at the first 8 m tile's center, also in longer courses.
+        lower[0] -= 4.0
+        upper[0] += terrain_size[0] - 4.0
+    else:
+        lower[0] -= terrain_size[0] / 2
+        upper[0] += terrain_size[0] / 2
+    lower[1] -= terrain_size[1] / 2
+    upper[1] += terrain_size[1] / 2
+    lookat = ((lower[0] + upper[0]) / 2, (lower[1] + upper[1]) / 2, upper[2] + 0.5)
+    distance = max(10.0, 1.5 * max(upper[0] - lower[0], upper[1] - lower[1]))
+    eye = (lookat[0] - 0.25 * distance, lookat[1] - 0.25 * distance, lookat[2] + distance)
+    return eye, lookat
+
+
 @hydra_task_config(args_cli.task, args_cli.agent)
 def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agent_cfg: RslRlBaseRunnerCfg):
     """Play with RSL-RL agent."""
@@ -115,8 +142,33 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
     # set the log directory for the environment (works for all environment types)
     env_cfg.log_dir = log_dir
 
+    # Set the Ant camera after Hydra parsing: asset_name defaults to None,
+    # so overriding it with a string through Hydra fails config type checks.
+    if args_cli.camera_mode == "overview":
+        env_cfg.viewer.origin_type = "world"
+    elif task_name.startswith("Isaac-Ant-"):
+        env_cfg.viewer.origin_type = "asset_root"
+        env_cfg.viewer.asset_name = "robot"
+        env_cfg.viewer.env_index = 0
+        env_cfg.viewer.eye = (-4.0, 4.0, 2.5)
+        env_cfg.viewer.lookat = (0.0, 0.0, 0.5)
+
     # create isaac environment
     env = gym.make(args_cli.task, cfg=env_cfg, render_mode="rgb_array" if args_cli.video else None)
+
+    if args_cli.camera_mode == "overview":
+        base_env = env.unwrapped
+        camera = base_env.viewport_camera_controller
+        if camera is not None:
+            terrain = base_env.scene.terrain
+            generator = terrain.cfg.terrain_generator if terrain is not None else None
+            terrain_size = generator.size if generator is not None else (env_cfg.scene.env_spacing,) * 2
+            eye, lookat = overview_camera_pose(
+                base_env.scene.env_origins.detach().cpu().tolist(), terrain_size,
+                continuous_course=task_name.startswith(("Isaac-Ant-Continuous", "Isaac-Ant-Common")),
+            )
+            camera.update_view_location(eye=eye, lookat=lookat)
+            print(f"[INFO] Overview camera: eye={eye}, lookat={lookat}")
 
     # convert to single-agent instance if required by the RL algorithm
     if isinstance(env.unwrapped, DirectMARLEnv):
@@ -177,6 +229,11 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
     # reset environment
     obs = env.get_observations()
     timestep = 0
+    if args_cli.log_resets:
+        termination_manager = getattr(env.unwrapped, "termination_manager", None)
+        if termination_manager is None:
+            raise ValueError("--log_resets requires a manager-based environment.")
+        episode_steps = torch.zeros(env.num_envs, dtype=torch.long, device=env.unwrapped.device)
     # simulate environment
     while simulation_app.is_running():
         start_time = time.time()
@@ -185,7 +242,30 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
             # agent stepping
             actions = policy(obs)
             # env stepping
-            obs, _, _, _ = env.step(actions)
+            obs, _, dones, _ = env.step(actions)
+            if args_cli.log_resets:
+                episode_steps += 1
+                # Manager term buffers retain the terminal flags after auto-reset;
+                # robot/sensor data already describe the reset state at this point.
+                for env_id in dones.nonzero(as_tuple=True)[0].tolist():
+                    reasons = [
+                        name for name in termination_manager.active_terms
+                        if bool(termination_manager.get_term(name)[env_id])
+                    ]
+                    seconds = episode_steps[env_id].item() * dt
+                    detail = ""
+                    if "flight" in reasons:
+                        flight_term = termination_manager.get_term_cfg("flight").func
+                        if hasattr(flight_term, "last_has_landed"):
+                            landed = int(flight_term.last_has_landed[env_id].item())
+                            air_s = flight_term.last_air_time_s[env_id].item()
+                            detail = f" first_contact={landed} all_feet_air_s={air_s:.2f}"
+                    if "long_course_progress" in termination_manager.active_terms:
+                        tracker = termination_manager.get_term_cfg("long_course_progress").func
+                        frontier = tracker.last_grounded_max_x[env_id].item()
+                        detail += f" grounded_frontier_m={frontier:.2f} tiles_passed={int((frontier + 4.0) // 8.0)}"
+                    print(f"[RESET] env={env_id} episode_s={seconds:.2f} reasons={','.join(reasons)}{detail}", flush=True)
+                episode_steps[dones.bool()] = 0
         if args_cli.video:
             timestep += 1
             # Exit the play loop after recording one video
