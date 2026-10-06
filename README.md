@@ -40,6 +40,7 @@ python -m pip install -r coursework/ant-five-models/requirements-evaluation.txt
 PPT의 기존 공통 평가 기록에서 Recovery는 11.253564 ± 11.336109,
 접지 최대 전진 거리 평균은 7.473385m입니다. 기존 Continuous-Recovery-Eval
 점수와 공통 평가 점수는 환경·종료 조건이 다르므로 직접 비교하지 않습니다.
-추가 실행 검증은 `IsaacLab_RS/coursework/ant-five-models/verification/`에 기록합니다.
+다섯 모델 모두 제공 evaluator와 Git 복제본 공통 evaluator에서 각각 100개 첫 에피소드를 정상 완료했습니다.
+새 실행 검증 기록은 [verification](IsaacLab_RS/coursework/ant-five-models/verification/README.md)에 있습니다.
 
 원본 IsaacLab의 라이선스와 저작자 표기는 유지했습니다. 출처는 [UPSTREAM.md](UPSTREAM.md)를 참고하세요.
