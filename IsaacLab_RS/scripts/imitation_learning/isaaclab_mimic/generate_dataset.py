@@ -29,6 +29,12 @@ parser.add_argument(
     help="File path to export recorded and generated episodes.",
 )
 parser.add_argument(
+    "--seed",
+    type=int,
+    default=None,
+    help="Override the datagen seed from the env config (use distinct seeds when running workers in parallel).",
+)
+parser.add_argument(
     "--pause_subtask",
     action="store_true",
     help="pause after every subtask during generation for debugging - only useful with render flag",
@@ -116,6 +122,9 @@ def main():
         )
 
     # Set seed for generation
+    if args_cli.seed is not None:
+        env.cfg.datagen_config.seed = args_cli.seed
+    print(f"Datagen seed: {env.cfg.datagen_config.seed}")
     random.seed(env.cfg.datagen_config.seed)
     np.random.seed(env.cfg.datagen_config.seed)
     torch.manual_seed(env.cfg.datagen_config.seed)
