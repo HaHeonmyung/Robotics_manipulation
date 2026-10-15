@@ -4,6 +4,9 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 import gymnasium as gym
+import os
+
+from . import agents
 
 ##
 # Register Gym environments.
@@ -17,6 +20,9 @@ gym.register(
     entry_point="isaaclab.envs:ManagerBasedRLEnv",
     kwargs={
         "env_cfg_entry_point": f"{__name__}.place_toy2box_rmp_rel_env_cfg:RmpFlowAgibotPlaceToy2BoxEnvCfg",
+        "robomimic_bc_cfg_entry_point": os.path.join(
+            agents.__path__[0], "robomimic/bc_rnn_low_dim_agibot_toy2box.json"
+        ),
     },
     disable_env_checker=True,
 )
