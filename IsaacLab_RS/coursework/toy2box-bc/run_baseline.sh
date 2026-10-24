@@ -2,13 +2,13 @@
 # Full assignment pipeline for one condition: human demos -> Mimic -> BC (seed 101 & 111) -> eval (seed 42).
 # Usage (from IsaacLab_RS):
 #   coursework/toy2box-bc/run_baseline.sh <human_demos.hdf5> <tag> [mimic_trials=500] [--skip-mimic]
-# Outputs under coursework/toy2box-bc/runs/<tag>/: step logs, eval_seed101.json, eval_seed111.json, summary.txt
+# Outputs under coursework/toy2box-bc/results/<tag>/: step logs, eval_seed101.json, eval_seed111.json, summary.txt
 # Mimic output: datasets/<tag>_mimic_<trials>.hdf5 (reused if it already exists).
 # With --skip-mimic the human demos are used for training directly.
 set -e
 cd "$(dirname "$0")/../.."
 HUMAN=${1:?human demo hdf5}; TAG=${2:?tag}; TRIALS=${3:-500}; MODE=${4:-}
-RUNDIR=coursework/toy2box-bc/runs/$TAG; mkdir -p "$RUNDIR"
+RUNDIR=coursework/toy2box-bc/results/$TAG; mkdir -p "$RUNDIR"
 MIMIC_TASK=Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-Rel-Mimic-v0
 source ~/anaconda3/etc/profile.d/conda.sh && conda activate lerobot-arena
 export PYTHONUNBUFFERED=1

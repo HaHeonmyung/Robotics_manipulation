@@ -25,11 +25,11 @@
    `./isaaclab.sh -p coursework/toy2box-bc/summarize_demos.py datasets/team03_all.hdf5`
    replay 확인: `./isaaclab.sh -p scripts/tools/replay_demos.py --task Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0 --dataset_file datasets/team03_all.hdf5 --num_envs 1 --headless`
 3. Baseline (Mimic 500 → BC seed 101·111 → 평가 seed 42 + 실패 단계 분류)
-   `nohup coursework/toy2box-bc/run_baseline.sh datasets/team03_all.hdf5 baseline 500 > coursework/toy2box-bc/runs/baseline.log 2>&1 &`
-   결과: `coursework/toy2box-bc/runs/baseline/summary.txt`, `eval_seed101.json`, `eval_seed111.json`
+   `nohup coursework/toy2box-bc/run_baseline.sh datasets/team03_all.hdf5 baseline 500 > coursework/toy2box-bc/results/baseline.log 2>&1 &`
+   결과: `coursework/toy2box-bc/results/baseline/summary.txt`, `eval_seed101.json`, `eval_seed111.json`
 4. 실패 진단
    `eval.sh`는 `play_diagnose.py`로 100회를 돌리면서 실패를 접근·파지·운반·배치로 나눈다.
-   `python3 coursework/toy2box-bc/aggregate.py runs/baseline/eval_seed101.json runs/baseline/eval_seed111.json`
+   `python3 coursework/toy2box-bc/aggregate.py results/baseline/eval_seed101.json results/baseline/eval_seed111.json`
 5. 통제 실험: 한 요인만 바꾼 데이터/설정으로 같은 스크립트를 다른 tag로 다시 돌린다.
    `run_baseline.sh datasets/team03_filtered.hdf5 exp_noregrasp 500`
 6. 최종 평가 명령 (제출용, 조교 형식)
@@ -58,4 +58,4 @@
 - `eval.sh` / `play_diagnose.py` 평가 + 실패 단계 분류
 - `aggregate.py` seed 평균 ± 표준편차, 실패 분포
 - `run_baseline.sh` 한 조건 전체 파이프라인
-- `runs/<tag>/` 각 조건의 로그·결과 JSON
+- `results/<tag>/` 각 조건의 로그·결과 JSON
