@@ -1,7 +1,7 @@
 """Combine play_diagnose.py result files into the numbers the assignment asks for.
 
 Usage:
-    python3 coursework/toy2box-bc/aggregate.py results/baseline/eval_seed101.json results/baseline/eval_seed111.json
+    python3 coursework/toy2box-bc/aggregate.py results/baseline/eval_seed101.json results/baseline/eval_seed102.json
 
 Prints success rate per training seed, mean +/- std over seeds, and the failure
 stage distribution (counts and share of failures) per seed and pooled.
@@ -10,7 +10,7 @@ stage distribution (counts and share of failures) per seed and pooled.
 import json
 import sys
 
-import numpy as np
+import statistics
 
 STAGES = ["approach", "grasp", "transport", "place"]
 
@@ -33,7 +33,7 @@ def main(paths):
             cells.append(f"{c:3d}({c / n_fail:4.0%})" if n_fail else f"{c:3d}")
         print(f"{p[-40:]:<40s} {r['successes']:>5d} {r['success_rate']:>6.2f}  " + "  ".join(f"{c:>9s}" for c in cells))
     print()
-    print(f"success rate over {len(rates)} seed(s): {np.mean(rates):.3f} +/- {np.std(rates):.3f}")
+    print(f"success rate over {len(rates)} seed(s): {statistics.mean(rates):.3f} +/- {(statistics.pstdev(rates) if len(rates) > 1 else 0.0):.3f}")
     if pooled_fail:
         print("failure stages pooled: " + ", ".join(f"{s} {pooled[s]} ({pooled[s] / pooled_fail:.0%})" for s in STAGES))
 

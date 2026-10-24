@@ -1,5 +1,5 @@
 #!/bin/bash
-# Full assignment pipeline for one condition: human demos -> Mimic -> BC (seed 101 & 111) -> eval (seed 42).
+# Full assignment pipeline for one condition: human demos -> Mimic -> BC (seed 101 & 102) -> eval (seed 42).
 # Usage (from IsaacLab_RS):
 #   coursework/toy2box-bc/run_baseline.sh <human_demos.hdf5> <tag> [mimic_trials=500] [--skip-mimic]
 # Outputs under coursework/toy2box-bc/results/<tag>/: step logs, eval_seed101.json, eval_seed102.json, summary.txt
