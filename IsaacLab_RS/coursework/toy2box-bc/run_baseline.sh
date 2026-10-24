@@ -2,7 +2,7 @@
 # Full assignment pipeline for one condition: human demos -> Mimic -> BC (seed 101 & 111) -> eval (seed 42).
 # Usage (from IsaacLab_RS):
 #   coursework/toy2box-bc/run_baseline.sh <human_demos.hdf5> <tag> [mimic_trials=500] [--skip-mimic]
-# Outputs under coursework/toy2box-bc/results/<tag>/: step logs, eval_seed101.json, eval_seed111.json, summary.txt
+# Outputs under coursework/toy2box-bc/results/<tag>/: step logs, eval_seed101.json, eval_seed102.json, summary.txt
 # Mimic output: datasets/<tag>_mimic_<trials>.hdf5 (reused if it already exists).
 # With --skip-mimic the human demos are used for training directly.
 set -e
@@ -32,12 +32,12 @@ else
 fi
 echo "train data: $TRAIN_DATA" | tee -a "$RUNDIR/summary.txt"
 
-for SEED in 101 111; do
+for SEED in 101 102; do
     coursework/toy2box-bc/train.sh "$TRAIN_DATA" $SEED "$TAG" > "$RUNDIR/03_train_seed$SEED.log" 2>&1
     CK=$(grep FINAL_CHECKPOINT "$RUNDIR/03_train_seed$SEED.log" | tail -1 | cut -d= -f2)
     echo "seed $SEED checkpoint: $CK" | tee -a "$RUNDIR/summary.txt"
     coursework/toy2box-bc/eval.sh "$CK" "$RUNDIR/eval_seed$SEED.json" 42 > "$RUNDIR/04_eval_seed$SEED.log" 2>&1 &
 done
 wait
-python3 coursework/toy2box-bc/aggregate.py "$RUNDIR"/eval_seed101.json "$RUNDIR"/eval_seed111.json | tee -a "$RUNDIR/summary.txt"
+python3 coursework/toy2box-bc/aggregate.py "$RUNDIR"/eval_seed101.json "$RUNDIR"/eval_seed102.json | tee -a "$RUNDIR/summary.txt"
 echo "== $TAG finished $(date)" | tee -a "$RUNDIR/summary.txt"
