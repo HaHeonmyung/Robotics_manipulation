@@ -1,7 +1,7 @@
 """Combine play_diagnose.py result files into the numbers the assignment asks for.
 
 Usage:
-    python3 coursework/toy2box-bc/aggregate.py results/baseline/eval_seed101.json results/baseline/eval_seed102.json
+    python3 coursework/toy2box-bc/aggregate.py results/baseline/eval_seed101.json results/baseline/eval_seed111.json
 
 Prints success rate per training seed, mean +/- std over seeds, and the failure
 stage distribution (counts and share of failures) per seed and pooled.
