@@ -1,0 +1,11 @@
+== baseline started 2026. 10. 27. (화) 21:31:47 KST
+train data: datasets/baseline_mimic_500.hdf5
+seed 101 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/baseline_seed101/20261028002341/models/model_epoch_2000.pth
+seed 111 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/baseline_seed111/20261028005546/models/model_epoch_2000.pth
+file                                      succ   rate   approach      grasp  transport      place
+ox-bc/results/baseline/eval_seed101.json    30   0.30   18( 26%)   21( 30%)   27( 39%)    4(  6%)
+ox-bc/results/baseline/eval_seed111.json    24   0.24   20( 26%)   19( 25%)   35( 46%)    2(  3%)
+
+success rate over 2 seed(s): 0.270 +/- 0.030
+failure stages pooled: approach 38 (26%), grasp 40 (27%), transport 62 (42%), place 6 (4%)
+== baseline finished 2026. 10. 28. (수) 02:21:36 KST
