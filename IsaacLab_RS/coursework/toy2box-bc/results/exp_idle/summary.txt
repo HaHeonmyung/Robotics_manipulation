@@ -1,0 +1,11 @@
+== exp_idle started 2026. 10. 28. (수) 19:10:49 KST
+train data: datasets/exp_idle_mimic_500.hdf5
+seed 101 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/exp_idle_seed101/20261028191057/models/model_epoch_2000.pth
+seed 111 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/exp_idle_seed111/20261028194219/models/model_epoch_2000.pth
+file                                      succ   rate   approach      grasp  transport      place
+ox-bc/results/exp_idle/eval_seed101.json    23   0.23    8( 10%)   30( 39%)   35( 45%)    4(  5%)
+ox-bc/results/exp_idle/eval_seed111.json    22   0.22   11( 14%)   22( 28%)   43( 55%)    2(  3%)
+
+success rate over 2 seed(s): 0.225 +/- 0.005
+failure stages pooled: approach 19 (12%), grasp 52 (34%), transport 78 (50%), place 6 (4%)
+== exp_idle finished 2026. 10. 28. (수) 21:11:43 KST
