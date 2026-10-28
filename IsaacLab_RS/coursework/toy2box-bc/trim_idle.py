@@ -19,9 +19,10 @@ import h5py
 import numpy as np
 
 
-def keep_mask(actions: np.ndarray, keep: int, protect: int) -> np.ndarray:
+def keep_mask(actions: np.ndarray, keep: int, protect: int, threshold: float = 0.0) -> np.ndarray:
     n = len(actions)
-    idle = (actions[:, :6] == 0).all(axis=1)
+    # threshold 0 = exactly zero (keyboard demos); Mimic output carries noise, so use e.g. 0.03 there
+    idle = (np.abs(actions[:, :6]) <= threshold).all(axis=1)
     switches = np.flatnonzero(np.diff(actions[:, 6]) != 0) + 1
     protected = np.zeros(n, dtype=bool)
     for s in switches:
@@ -63,6 +64,7 @@ def main():
     ap.add_argument("dst")
     ap.add_argument("--keep", type=int, default=5, help="idle steps kept per run (default 5 = 0.25 s)")
     ap.add_argument("--protect", type=int, default=10, help="steps around a gripper switch never trimmed")
+    ap.add_argument("--threshold", type=float, default=0.0, help="|motion action| at or below this counts as idle")
     a = ap.parse_args()
 
     total_in = total_out = 0
@@ -74,18 +76,18 @@ def main():
             demo = fi["data"][name]
             actions = demo["actions"][()]
             n = len(actions)
-            mask = keep_mask(actions, a.keep, a.protect)
+            mask = keep_mask(actions, a.keep, a.protect, a.threshold)
             g = go.create_group(name)
             cut_group(demo, g, mask, n)
             # initial_state is copied untouched by cut_group (its arrays have 1 row)
             g.attrs["num_samples"] = int(mask.sum())
             total_in += n
             total_out += int(mask.sum())
-            idle_in = (actions[:, :6] == 0).all(1).mean()
-            idle_out = (actions[mask][:, :6] == 0).all(1).mean()
+            idle_in = (np.abs(actions[:, :6]) <= a.threshold).all(1).mean()
+            idle_out = (np.abs(actions[mask][:, :6]) <= a.threshold).all(1).mean()
             print(f"{name:<8s} {n:4d} -> {int(mask.sum()):4d} steps  idle {idle_in:4.0%} -> {idle_out:4.0%}")
         go.attrs["total"] = total_out
-        go.attrs["trim_idle"] = f"keep={a.keep} protect={a.protect} src={a.src}"
+        go.attrs["trim_idle"] = f"keep={a.keep} protect={a.protect} threshold={a.threshold} src={a.src}"
     print(f"total {total_in} -> {total_out} steps ({1 - total_out / total_in:.0%} removed)")
 
 
