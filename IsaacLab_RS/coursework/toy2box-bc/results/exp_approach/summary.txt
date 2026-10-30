@@ -1,0 +1,11 @@
+== exp_approach started 2026. 10. 29. (목) 02:17:58 KST
+train data: datasets/exp_approach_mimic_500.hdf5
+seed 101 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/exp_approach_seed101/20261029021805/models/model_epoch_2000.pth
+seed 111 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/exp_approach_seed111/20261029025109/models/model_epoch_2000.pth
+file                                      succ   rate   approach      grasp  transport      place
+c/results/exp_approach/eval_seed101.json    19   0.19   17( 21%)   28( 35%)   31( 38%)    5(  6%)
+c/results/exp_approach/eval_seed111.json    20   0.20    9( 11%)   18( 22%)   47( 59%)    6(  8%)
+
+success rate over 2 seed(s): 0.195 +/- 0.005
+failure stages pooled: approach 26 (16%), grasp 46 (29%), transport 78 (48%), place 11 (7%)
+== exp_approach finished 2026. 10. 29. (목) 04:20:53 KST

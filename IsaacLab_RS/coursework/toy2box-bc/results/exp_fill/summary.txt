@@ -1,0 +1,11 @@
+== exp_fill started 2026. 10. 29. (목) 00:13:20 KST
+train data: datasets/exp_fill_mimic_500.hdf5
+seed 101 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/exp_fill_seed101/20261029001327/models/model_epoch_2000.pth
+seed 111 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/exp_fill_seed111/20261029004633/models/model_epoch_2000.pth
+file                                      succ   rate   approach      grasp  transport      place
+ox-bc/results/exp_fill/eval_seed101.json    16   0.16   12( 14%)   43( 51%)   26( 31%)    3(  4%)
+ox-bc/results/exp_fill/eval_seed111.json    10   0.10   13( 14%)   51( 57%)   25( 28%)    1(  1%)
+
+success rate over 2 seed(s): 0.130 +/- 0.030
+failure stages pooled: approach 25 (14%), grasp 94 (54%), transport 51 (29%), place 4 (2%)
+== exp_fill finished 2026. 10. 29. (목) 02:17:57 KST
