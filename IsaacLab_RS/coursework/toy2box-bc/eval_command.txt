@@ -1,0 +1,15 @@
+# 실습 과제 2: 최종 모델 평가 명령 (IsaacLab_RS 폴더에서 실행, 검증 seed 42, rollout 100회, horizon 800)
+# 환경: conda activate lerobot-arena 후 실행. 조건은 multi78_1000 (조원 4명 시범 78개 + Mimic 1,000), epoch 2000.
+cd ~/Robotics_manipulation/IsaacLab_RS
+
+# 학습 seed 101
+./isaaclab.sh -p scripts/imitation_learning/robomimic/play.py \
+    --task Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0 \
+    --checkpoint ./coursework/toy2box-bc/final_weights/multi78_1000_seed101_epoch2000.pth \
+    --num_rollouts 100 --horizon 800 --seed 42 --headless
+
+# 학습 seed 111
+./isaaclab.sh -p scripts/imitation_learning/robomimic/play.py \
+    --task Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0 \
+    --checkpoint ./coursework/toy2box-bc/final_weights/multi78_1000_seed111_epoch2000.pth \
+    --num_rollouts 100 --horizon 800 --seed 42 --headless
