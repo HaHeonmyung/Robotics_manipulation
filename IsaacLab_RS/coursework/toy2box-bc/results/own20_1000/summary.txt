@@ -1,0 +1,11 @@
+== own20_1000 started 2026. 10. 31. (토) 13:09:30 KST
+train data: datasets/own20_1000_mimic_1000.hdf5
+seed 101 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/own20_1000_seed101/20261031192750/models/model_epoch_2000.pth
+seed 111 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/own20_1000_seed111/20261031200528/models/model_epoch_2000.pth
+file                                      succ   rate   approach      grasp  transport      place
+-bc/results/own20_1000/eval_seed101.json    34   0.34   12( 18%)   14( 21%)   31( 47%)    9( 14%)
+-bc/results/own20_1000/eval_seed111.json    31   0.31   13( 19%)   15( 22%)   37( 54%)    4(  6%)
+
+success rate over 2 seed(s): 0.325 +/- 0.015
+failure stages pooled: approach 25 (19%), grasp 29 (21%), transport 68 (50%), place 13 (10%)
+== own20_1000 finished 2026. 10. 31. (토) 21:33:37 KST
