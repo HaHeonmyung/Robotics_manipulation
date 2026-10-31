@@ -431,6 +431,9 @@ class DataGenerator:
 
         assert selected_src_demo_inds[eef_name] is not None
         selected_src_demo_ind = selected_src_demo_inds[eef_name]
+        # record which source demo feeds this subtask (used by coursework/toy2box-bc src_stats)
+        if hasattr(self, "_src_log"):
+            self._src_log.append((eef_name, int(subtask_ind), int(selected_src_demo_ind)))
 
         if not self.env_cfg.datagen_config.generation_select_src_per_arm and need_source_demo_selection:
             for itrated_eef_name in self.env_cfg.subtask_configs.keys():
@@ -669,6 +672,7 @@ class DataGenerator:
         generated_obs = []
         generated_actions = []
         generated_success = False
+        self._src_log = []
 
         # some eef-specific state variables used during generation
         current_eef_selected_src_demo_indices = {}
@@ -944,6 +948,7 @@ class DataGenerator:
             observations=generated_obs,
             actions=generated_actions,
             success=generated_success,
+            src_demo_inds=list(self._src_log),
         )
         return results
 

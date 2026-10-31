@@ -4,6 +4,8 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import asyncio
+import json
+import os
 import contextlib
 import torch
 from typing import Any
@@ -60,6 +62,10 @@ async def run_data_generator(
         else:
             num_failures += 1
         num_attempts += 1
+        _log = os.environ.get("MIMIC_SRC_LOG")
+        if _log:
+            with open(_log, "a") as _fh:
+                _fh.write(json.dumps({"success": bool(results["success"]), "src": results.get("src_demo_inds", [])}) + chr(10))
 
 
 def env_loop(
