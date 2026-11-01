@@ -82,3 +82,13 @@ class RmpFlowAgibotPlaceToy2BoxMimicEnvCfg(RmpFlowAgibotPlaceToy2BoxEnvCfg, Mimi
             )
         )
         self.subtask_configs["agibot"] = subtask_configs
+
+
+@configclass
+class RmpFlowAgibotPlaceToy2BoxMimicNoise03EnvCfg(RmpFlowAgibotPlaceToy2BoxMimicEnvCfg):
+    """Same datagen setup with action_noise 0.03 instead of 0.01 (coursework B-axis experiment)."""
+
+    def __post_init__(self):
+        super().__post_init__()
+        for subtask in self.subtask_configs["agibot"]:
+            subtask.action_noise = 0.03

@@ -167,3 +167,12 @@ gym.register(
     },
     disable_env_checker=True,
 )
+
+gym.register(
+    id="Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-Rel-Mimic-Noise03-v0",
+    entry_point=f"{__name__}.pick_place_mimic_env:PickPlaceRelMimicEnv",
+    kwargs={
+        "env_cfg_entry_point": f"{__name__}.agibot_place_toy2box_mimic_env_cfg:RmpFlowAgibotPlaceToy2BoxMimicNoise03EnvCfg",
+    },
+    disable_env_checker=True,
+)
