@@ -1,0 +1,11 @@
+== rand70_1000 started 2026. 11. 01. (일) 09:09:18 KST
+train data: datasets/rand70_1000_mimic_1000.hdf5
+seed 101 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/rand70_1000_seed101/20261101123310/models/model_epoch_2000.pth
+seed 111 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/rand70_1000_seed111/20261101131036/models/model_epoch_2000.pth
+file                                      succ   rate   approach      grasp  transport      place
+bc/results/rand70_1000/eval_seed101.json    49   0.49    6( 12%)   11( 22%)   27( 53%)    7( 14%)
+bc/results/rand70_1000/eval_seed111.json    39   0.39   11( 18%)   16( 26%)   26( 43%)    8( 13%)
+
+success rate over 2 seed(s): 0.440 +/- 0.050
+failure stages pooled: approach 17 (15%), grasp 27 (24%), transport 53 (47%), place 15 (13%)
+== rand70_1000 finished 2026. 11. 01. (일) 14:39:40 KST
