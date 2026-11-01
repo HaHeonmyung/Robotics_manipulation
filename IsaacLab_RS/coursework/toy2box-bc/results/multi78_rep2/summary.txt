@@ -1,0 +1,11 @@
+== multi78_rep2 started 2026. 11. 02. (월) 00:26:41 KST
+train data: datasets/multi78_rep2_mimic_1000.hdf5
+seed 101 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/multi78_rep2_seed101/20261102002648/models/model_epoch_2000.pth
+seed 111 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/multi78_rep2_seed111/20261102010359/models/model_epoch_2000.pth
+file                                      succ   rate   approach      grasp  transport      place
+c/results/multi78_rep2/eval_seed101.json    43   0.43   12( 21%)   12( 21%)   29( 51%)    4(  7%)
+c/results/multi78_rep2/eval_seed111.json    33   0.33    9( 13%)   25( 37%)   30( 45%)    3(  4%)
+
+success rate over 2 seed(s): 0.380 +/- 0.050
+failure stages pooled: approach 21 (17%), grasp 37 (30%), transport 59 (48%), place 7 (6%)
+== multi78_rep2 finished 2026. 11. 02. (월) 02:30:51 KST
