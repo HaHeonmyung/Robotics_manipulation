@@ -20,20 +20,5 @@ with h5py.File("datasets/multi78_1000_mimic_1000.hdf5","r") as fi, h5py.File("da
     print("rand500", len(pick), tot)
 PY
 coursework/toy2box-bc/run_baseline.sh datasets/multi78_rand500.hdf5 rand500 500 --skip-mimic > $R/rand500.log 2>&1
-python - <<PY > $R/src_stats/build_multi20.log 2>&1
-import h5py, random, collections
-random.seed(0)
-f=h5py.File("datasets/multi78.hdf5","r"); src=f["data"].attrs["source"].split(chr(10)); f.close()
-groups=collections.defaultdict(list)
-for line in src:
-    d, rest = line.split(" <- "); groups[rest.split(":")[0]].append(int(d.split("_")[1]))
-keep=[]
-for g in sorted(groups): keep += random.sample(groups[g],5)
-skip=sorted(set(range(78))-set(keep))
-print("groups", {g:len(v) for g,v in groups.items()}); print("keep", sorted(keep)); print("skip", ",".join(map(str,skip)))
-open("$R/src_stats/multi20_skip.txt","w").write(",".join(map(str,skip)))
-PY
-SKIP=$(cat $R/src_stats/multi20_skip.txt)
-python -I coursework/toy2box-bc/select_demos.py datasets/multi20.hdf5 datasets/multi78.hdf5:$SKIP >> $R/src_stats/build_multi20.log 2>&1
-coursework/toy2box-bc/run_baseline.sh datasets/multi20.hdf5 multi20_1000 1000 > $R/multi20_1000.log 2>&1
+# multi20_1000 dropped on 2026-11-01: operator-count factor deprioritized by the team
 echo AFTER_DONE > $R/after_filt_done
