@@ -43,9 +43,14 @@ parser.add_argument(
     "--norm_factor_max", type=float, default=None, help="Optional: maximum value of the normalization factor."
 )
 parser.add_argument("--enable_pinocchio", default=False, action="store_true", help="Enable Pinocchio.")
+parser.add_argument("--video", action="store_true", default=False, help="Record one mp4 per trial (needs cameras).")
+parser.add_argument("--video_folder", type=str, default="videos/play_diagnose", help="Folder for the mp4 files.")
+parser.add_argument("--video_length", type=int, default=800, help="Max steps per recorded trial.")
 
 AppLauncher.add_app_launcher_args(parser)
 args_cli = parser.parse_args()
+if args_cli.video:
+    args_cli.enable_cameras = True
 
 if args_cli.enable_pinocchio:
     import pinocchio  # noqa: F401
@@ -126,6 +131,7 @@ def classify(rec: dict) -> dict:
 
 
 def rollout(policy, env, success_term, horizon, device):
+    uenv = env.unwrapped  # scene / cfg access; env itself may be a RecordVideo wrapper
     policy.start_episode()
     obs_dict, _ = env.reset()
     rec = dict(eef_pos=[], truck_pos=[], box_pos=[], gripper_pos=[], grasp=[], actions=[])
@@ -138,8 +144,8 @@ def rollout(policy, env, success_term, horizon, device):
         for ob in obs:
             obs[ob] = torch.squeeze(obs[ob])
 
-        if hasattr(env.cfg, "image_obs_list"):
-            for image_name in env.cfg.image_obs_list:
+        if hasattr(uenv.cfg, "image_obs_list"):
+            for image_name in uenv.cfg.image_obs_list:
                 if image_name in obs_dict["policy"].keys():
                     image = torch.squeeze(obs_dict["policy"][image_name])
                     image = image.permute(2, 0, 1).clone().float()
@@ -159,13 +165,13 @@ def rollout(policy, env, success_term, horizon, device):
             actions = (
                 (actions + 1) * (args_cli.norm_factor_max - args_cli.norm_factor_min)
             ) / 2 + args_cli.norm_factor_min
-        actions = torch.from_numpy(actions).to(device=device).view(1, env.action_space.shape[1])
+        actions = torch.from_numpy(actions).to(device=device).view(1, uenv.action_space.shape[1])
         rec["actions"].append(actions.squeeze(0).tolist())
 
         obs_dict, _, terminated, truncated, _ = env.step(actions)
         steps += 1
 
-        if bool(success_term.func(env, **success_term.params)[0]):
+        if bool(success_term.func(uenv, **success_term.params)[0]):
             success = True
             break
         elif terminated or truncated:
@@ -186,12 +192,24 @@ def main():
     success_term = env_cfg.terminations.success
     env_cfg.terminations.success = None
 
-    env = gym.make(args_cli.task, cfg=env_cfg).unwrapped
+    env = gym.make(args_cli.task, cfg=env_cfg, render_mode="rgb_array" if args_cli.video else None)
+    if args_cli.video:
+        # one file per trial: play_diagnose-episode-<n>.mp4 (same wrapper the rsl_rl play script uses)
+        env = gym.wrappers.RecordVideo(
+            env,
+            video_folder=os.path.abspath(args_cli.video_folder),
+            episode_trigger=lambda ep: True,
+            video_length=args_cli.video_length,
+            name_prefix="play_diagnose",
+            disable_logger=True,
+        )
+    else:
+        env = env.unwrapped
 
     torch.manual_seed(args_cli.seed)
     np.random.seed(args_cli.seed)
     random.seed(args_cli.seed)
-    env.seed(args_cli.seed)
+    env.unwrapped.seed(args_cli.seed)
 
     device = TorchUtils.get_torch_device(try_to_use_cuda=True)
 
