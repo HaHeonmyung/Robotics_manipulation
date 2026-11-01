@@ -1,0 +1,11 @@
+== graspwin_1000 started 2026. 11. 01. (일) 19:04:58 KST
+train data: datasets/multi78_graspwin_mimic_1000.hdf5
+seed 101 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/graspwin_1000_seed101/20261101190505/models/model_epoch_2000.pth
+seed 111 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/graspwin_1000_seed111/20261101194451/models/model_epoch_2000.pth
+file                                      succ   rate   approach      grasp  transport      place
+/results/graspwin_1000/eval_seed101.json    46   0.46   11( 20%)   11( 20%)   26( 48%)    6( 11%)
+/results/graspwin_1000/eval_seed111.json    36   0.36    9( 14%)   23( 36%)   25( 39%)    7( 11%)
+
+success rate over 2 seed(s): 0.410 +/- 0.050
+failure stages pooled: approach 20 (17%), grasp 34 (29%), transport 51 (43%), place 13 (11%)
+== graspwin_1000 finished 2026. 11. 01. (일) 21:13:04 KST

@@ -1,0 +1,11 @@
+== rand500 started 2026. 11. 01. (일) 17:04:26 KST
+train data: datasets/multi78_rand500.hdf5
+seed 101 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/rand500_seed101/20261101170432/models/model_epoch_2000.pth
+seed 111 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/rand500_seed111/20261101173724/models/model_epoch_2000.pth
+file                                      succ   rate   approach      grasp  transport      place
+box-bc/results/rand500/eval_seed101.json    20   0.20   27( 34%)   40( 50%)   13( 16%)    0(  0%)
+box-bc/results/rand500/eval_seed111.json    21   0.21   19( 24%)   34( 43%)   22( 28%)    4(  5%)
+
+success rate over 2 seed(s): 0.205 +/- 0.005
+failure stages pooled: approach 46 (29%), grasp 74 (47%), transport 35 (22%), place 4 (3%)
+== rand500 finished 2026. 11. 01. (일) 19:03:31 KST
