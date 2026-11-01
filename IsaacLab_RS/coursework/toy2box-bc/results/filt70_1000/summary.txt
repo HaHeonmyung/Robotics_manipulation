@@ -1,0 +1,11 @@
+== filt70_1000 started 2026. 11. 01. (일) 03:56:41 KST
+train data: datasets/filt70_1000_mimic_1000.hdf5
+seed 101 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/filt70_1000_seed101/20261101070653/models/model_epoch_2000.pth
+seed 111 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/filt70_1000_seed111/20261101074342/models/model_epoch_2000.pth
+file                                      succ   rate   approach      grasp  transport      place
+bc/results/filt70_1000/eval_seed101.json    41   0.41    3(  5%)   19( 32%)   26( 44%)   11( 19%)
+bc/results/filt70_1000/eval_seed111.json    48   0.48    7( 13%)   15( 29%)   23( 44%)    7( 13%)
+
+success rate over 2 seed(s): 0.445 +/- 0.035
+failure stages pooled: approach 10 (9%), grasp 34 (31%), transport 49 (44%), place 18 (16%)
+== filt70_1000 finished 2026. 11. 01. (일) 09:09:18 KST
