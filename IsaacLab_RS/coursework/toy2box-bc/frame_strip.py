@@ -6,7 +6,10 @@ times=[float(t) for t in next((a.split("=",1)[1] for a in sys.argv if a.startswi
 ff=imageio_ffmpeg.get_ffmpeg_exe(); rows=[]
 for label,path in items:
     frames=[]
-    for t in times:
+    row_times=times
+    if "@" in path:
+        path,tt=path.rsplit("@",1); row_times=[float(x) for x in tt.split(",")]
+    for t in row_times:
         p=subprocess.run([ff,"-loglevel","error","-ss",str(t),"-i",path,"-frames:v","1","-f","image2pipe","-vcodec","png","-"],capture_output=True)
         if p.stdout:
             import io; im=Image.open(io.BytesIO(p.stdout)).convert("RGB")
