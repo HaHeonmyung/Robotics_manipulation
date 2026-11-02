@@ -1,0 +1,11 @@
+== guided20_1000 started 2026. 11. 02. (월) 21:05:45 KST
+train data: datasets/guided20_1000_mimic_1000.hdf5
+seed 101 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/guided20_1000_seed101/20261103020038/models/model_epoch_2000.pth
+seed 111 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/guided20_1000_seed111/20261103024320/models/model_epoch_2000.pth
+file                                      succ   rate   approach      grasp  transport      place
+/results/guided20_1000/eval_seed101.json    12   0.12   13( 15%)   13( 15%)   30( 34%)   32( 36%)
+/results/guided20_1000/eval_seed111.json    13   0.13   19( 22%)   13( 15%)   37( 43%)   18( 21%)
+
+success rate over 2 seed(s): 0.125 +/- 0.005
+failure stages pooled: approach 32 (18%), grasp 26 (15%), transport 67 (38%), place 50 (29%)
+== guided20_1000 finished 2026. 11. 03. (화) 04:19:47 KST
