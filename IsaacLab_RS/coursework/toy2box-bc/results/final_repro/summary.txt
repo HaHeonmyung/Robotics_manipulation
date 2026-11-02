@@ -1,0 +1,5 @@
+seed 101: Successful trials: 38, out of 100 trials
+seed 101: Success rate: 0.38
+seed 111: Successful trials: 42, out of 100 trials
+seed 111: Success rate: 0.42
+0c6601ae919e55b4301870dd12a3abd43f2f682e
