@@ -1,0 +1,11 @@
+== rand750 started 2026. 11. 02. (월) 03:38:25 KST
+train data: datasets/multi78_rand750.hdf5
+seed 101 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/rand750_seed101/20261102033831/models/model_epoch_2000.pth
+seed 111 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/rand750_seed111/20261102041333/models/model_epoch_2000.pth
+file                                      succ   rate   approach      grasp  transport      place
+box-bc/results/rand750/eval_seed101.json    31   0.31   14( 20%)   24( 35%)   29( 42%)    2(  3%)
+box-bc/results/rand750/eval_seed111.json    33   0.33    9( 13%)   21( 31%)   26( 39%)   11( 16%)
+
+success rate over 2 seed(s): 0.320 +/- 0.010
+failure stages pooled: approach 23 (17%), grasp 45 (33%), transport 55 (40%), place 13 (10%)
+== rand750 finished 2026. 11. 02. (월) 05:39:53 KST

@@ -1,0 +1,11 @@
+== noise03_1000 started 2026. 11. 02. (월) 09:19:50 KST
+train data: datasets/multi78_noise03_mimic_1000.hdf5
+seed 101 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/noise03_1000_seed101/20261102091957/models/model_epoch_2000.pth
+seed 111 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-v0/noise03_1000_seed111/20261102095703/models/model_epoch_2000.pth
+file                                      succ   rate   approach      grasp  transport      place
+c/results/noise03_1000/eval_seed101.json    42   0.42   17( 29%)   19( 33%)   17( 29%)    5(  9%)
+c/results/noise03_1000/eval_seed111.json    41   0.41   25( 42%)   11( 19%)   20( 34%)    3(  5%)
+
+success rate over 2 seed(s): 0.415 +/- 0.005
+failure stages pooled: approach 42 (36%), grasp 30 (26%), transport 37 (32%), place 8 (7%)
+== noise03_1000 finished 2026. 11. 02. (월) 11:22:39 KST
