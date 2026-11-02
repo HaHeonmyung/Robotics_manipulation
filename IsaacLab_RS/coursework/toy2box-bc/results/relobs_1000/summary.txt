@@ -1,0 +1,8 @@
+seed 101 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-RelObs-v0/relobs_1000_seed101/20261102134549/models/model_epoch_2000.pth
+seed 111 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-RelObs-v0/relobs_1000_seed111/20261102142520/models/model_epoch_2000.pth
+file                                      succ   rate   approach      grasp  transport      place
+bc/results/relobs_1000/eval_seed101.json    54   0.54   14( 30%)    2(  4%)   22( 48%)    8( 17%)
+bc/results/relobs_1000/eval_seed111.json    59   0.59    5( 12%)    7( 17%)   23( 56%)    6( 15%)
+
+success rate over 2 seed(s): 0.565 +/- 0.025
+failure stages pooled: approach 19 (22%), grasp 9 (10%), transport 45 (52%), place 14 (16%)

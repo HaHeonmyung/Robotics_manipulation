@@ -1,0 +1,13 @@
+# 실습 과제 2: C축 모델(relobs_1000) 평가 명령 (IsaacLab_RS 폴더에서, 검증 seed 42, rollout 100회, horizon 800)
+# 태스크 변형 Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-RelObs-v0: 환경·행동·성공 판정은 원본과 동일, 관측에 toy_truck_rel·box_rel(물체−손끝) 2항만 추가.
+cd ~/Robotics_manipulation/IsaacLab_RS
+
+./isaaclab.sh -p scripts/imitation_learning/robomimic/play.py \
+    --task Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-RelObs-v0 \
+    --checkpoint ./coursework/toy2box-bc/final_weights_relobs/relobs_1000_seed101_epoch2000.pth \
+    --num_rollouts 100 --horizon 800 --seed 42 --headless
+
+./isaaclab.sh -p scripts/imitation_learning/robomimic/play.py \
+    --task Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-RelObs-v0 \
+    --checkpoint ./coursework/toy2box-bc/final_weights_relobs/relobs_1000_seed111_epoch2000.pth \
+    --num_rollouts 100 --horizon 800 --seed 42 --headless
