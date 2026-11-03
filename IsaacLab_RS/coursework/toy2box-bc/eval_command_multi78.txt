@@ -1,5 +1,5 @@
 # 실습 과제 2: 비교 기준 모델(multi78_1000, 절대 좌표) 평가 명령 (IsaacLab_RS 폴더에서 실행, 검증 seed 42, rollout 100회, horizon 800)
-# 환경: conda activate lerobot-arena 후 실행. 조건은 multi78_1000 (조작자 4명(우리 조 2명 + 다른 조 2명, 데이터 교환) 시범 78개 + Mimic 1,000), epoch 2000.
+# 환경: conda activate lerobot-arena 후 실행. 조건은 multi78_1000 (조원 3명 시범 78개 + Mimic 1,000), epoch 2000.
 cd ~/Robotics_manipulation/IsaacLab_RS
 
 # 학습 seed 101
