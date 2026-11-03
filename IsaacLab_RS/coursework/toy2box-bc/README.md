@@ -7,8 +7,8 @@
 
 ## 최종 결과 요약 (2026-11-02)
 
-연구 축 B(데이터 증강). 진단: 실패의 47%가 파지 단계, 78건이 트럭 5 cm 앞에서 멈춘 시간 초과 → 파지 직전 상태를 덮는 학습 데이터 부족.
-주 가설: Mimic 생성 수를 늘리면 파지 직전 상태 커버리지가 늘어 성공률이 오른다 (지지). 보조 가설(원본 선별, action noise)과 A축 편집 실험(정지 구간, 파지 구간 가중)은 모두 기각.
+연구 축 C(관측 표현). 진단 1: 실패의 47%가 파지 단계, 78건이 트럭 5 cm 앞에서 멈춘 시간 초과. 진단 2: 데이터 쪽 가설 5개(정지 구간 편집, 파지 구간 가중, 원본 선별, action noise)는 모두 기각, 데이터 양(Mimic 1,000)만 효과.
+주 가설: 정책이 손–트럭 거리를 절대 좌표에서 스스로 계산해야 해서 파지 직전 정렬에 실패한다 → 물체 위치를 손끝 기준 상대 좌표로 추가하면 파지 실패가 줄고 성공률이 오른다 (지지: 40.0 → 56.5, 파지 관련 실패 60 → 21).
 
 | 조건 | 사람 시범 | Mimic | 성공률 (seed 101 / 111, 평가 seed 42, 100회, horizon 800, epoch 2000) |
 |---|---|---|---|
@@ -16,10 +16,11 @@
 | own20_1000 | 20 | 1,000 | 32.5 ± 1.5 (34 / 31) |
 | rand500 | 78 | 임의 500 | 20.5 ± 0.5 (20 / 21) |
 | rand750 | 78 | 임의 750 | 32.0 ± 1.0 (31 / 33) |
-| **multi78_1000 (제출)** | 78 | 1,000 | **40.0 ± 2.0 (38 / 42)**, 평가 seed 7: 39.0 ± 3.0 |
+| multi78_1000 (비교 기준) | 78 | 1,000 | 40.0 ± 2.0 (38 / 42), 평가 seed 7: 39.0 ± 3.0 |
 | multi78_rep2 | 78 | 1,000 (생성 seed 2) | 38.0 ± 5.0 (43 / 33) |
 | filt70_1000 / rand70_1000 | 70 / 70 | 1,000 | 44.5 ± 3.5 / 44.0 ± 5.0 (가설 2 기각) |
 | noise03_1000 | 78 | 1,000 (noise 0.03) | 41.5 ± 0.5 (가설 4 기각) |
+| **relobs_1000 (제출)** | 78 | 1,000 + 관측 2항(물체−손끝) | **56.5 ± 2.5 (54 / 59)**, 평가 seed 7: 51.5 ± 0.5 |
 
 ### 데이터 출처
 - 사람 시범 80개: 조작자 4명(우리 조 2명 + 다른 조 2명, 데이터 교환), 키보드, 각 20개. replay 재현 실패 2개 제외 → 78개 (`datasets/multi78.hdf5`, 원본별 출처는 파일의 `data.attrs["source"]`).
@@ -30,8 +31,8 @@
 - Mimic 생성: `generate_dataset.py --num_envs 100 --generation_num_trials N`, 성공 N개까지 생성(multi78_1000: 2,452회 시도 중 1,000, 40.8%).
 
 ### 제출물
-- 가중치: `final_weights/multi78_1000_seed101_epoch2000.pth`, `final_weights/multi78_1000_seed111_epoch2000.pth` (SHA-256은 `final_weights/SHA256SUMS`).
-- 평가 명령: `eval_command.txt`. 재현 로그: `results/final_repro/`.
+- 최종 가중치: `final_weights/relobs_1000_seed101_epoch2000.pth`, `final_weights/relobs_1000_seed111_epoch2000.pth` (SHA-256은 `final_weights/SHA256SUMS`). 태스크 `Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-RelObs-v0` (원본 환경 설정 상속, 관측 `toy_truck_rel`·`box_rel` 2항 추가; 씬·행동·성공 판정·종료 조건 동일).
+- 평가 명령: `eval_command.txt` (조교 play.py 형식). 비교 기준 multi78_1000은 `final_weights_multi78/`, `eval_command_multi78.txt`, 재현 로그 `results/final_repro/`.
 - 사전 등록한 판정 기준: `PLAN.md`. 모든 조건의 평가 JSON: `results/<조건>/eval_seed{101,111}.json`.
 
 ## 지켜야 하는 규칙 (모든 조 동일)
