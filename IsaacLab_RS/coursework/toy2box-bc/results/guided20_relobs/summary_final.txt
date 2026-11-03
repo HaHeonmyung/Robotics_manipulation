@@ -1,0 +1,6 @@
+file                                      succ   rate   approach      grasp  transport      place
+esults/guided20_relobs/eval_seed101.json    10   0.10   10( 11%)   16( 18%)   33( 37%)   31( 34%)
+esults/guided20_relobs/eval_seed111.json    13   0.13   18( 21%)   17( 20%)   36( 41%)   16( 18%)
+
+success rate over 2 seed(s): 0.115 +/- 0.015
+failure stages pooled: approach 28 (16%), grasp 33 (19%), transport 69 (39%), place 47 (27%)

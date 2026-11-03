@@ -1,0 +1,4 @@
+seed 101 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-RelObs-v0/guided20_relobs_seed101/20261103041955/models/model_epoch_2000.pth
+seed 111 checkpoint: logs/robomimic/Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-RelObs-v0/guided20_relobs_seed111/20261103050520/models/model_epoch_2000.pth
+file                                      succ   rate   approach      grasp  transport      place
+esults/guided20_relobs/eval_seed101.json    10   0.10   10( 11%)   16( 18%)   33( 37%)   31( 34%)
