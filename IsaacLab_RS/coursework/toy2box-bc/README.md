@@ -32,7 +32,7 @@
 
 ### 제출물
 - 최종 가중치: `final_weights/relobs_1000_seed101_epoch2000.pth`, `final_weights/relobs_1000_seed111_epoch2000.pth` (SHA-256은 `final_weights/SHA256SUMS`). 태스크 `Isaac-Place-Toy2Box-Agibot-Right-Arm-RmpFlow-RelObs-v0` (원본 환경 설정 상속, 관측 `toy_truck_rel`·`box_rel` 2항 추가; 씬·행동·성공 판정·종료 조건 동일).
-- 평가 명령: `eval_command.txt` (조교 play.py 형식). 비교 기준 multi78_1000은 `final_weights_multi78/`, `eval_command_multi78.txt`, 재현 로그 `results/final_repro/`.
+- 평가 명령: `eval_command.txt` (조교 play.py 형식). 제출 직전 이 명령을 그대로 재실행한 결과 seed 101 54/100, seed 111 59/100으로 보고값과 동일 (`results/final_repro_relobs/`, 실행 commit 6eb8a80). 비교 기준 multi78_1000은 `final_weights_multi78/`, `eval_command_multi78.txt`, 재현 로그 `results/final_repro/` (38/42).
 - 사전 등록한 판정 기준: `PLAN.md`. 모든 조건의 평가 JSON: `results/<조건>/eval_seed{101,111}.json`.
 
 ## 지켜야 하는 규칙 (모든 조 동일)
